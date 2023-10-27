@@ -18,10 +18,10 @@ TOPIC_NAME = os.environ.get("TARGET_TOPIC_NAME")
 
 async def send_a_list_of_messages(sender):
     # Create a list of messages
-    messages = [ServiceBusMessage("Message in list") for _ in range(5)]
+    messages = [ServiceBusMessage("Message in list") for _ in range(10)]
     # send the list of messages to the topic
     await sender.send_messages(messages)
-    print("Sent a list of 5 messages")
+    print("Sent a list of 10 messages")
 
 #async def send_batch_message(sender):
     # Create a batch of messages
