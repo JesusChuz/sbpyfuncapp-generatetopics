@@ -1,5 +1,6 @@
 import logging
 import asyncio
+import json
 import os
 import azure.functions as func
 from azure.servicebus.aio import ServiceBusClient
@@ -16,13 +17,22 @@ TOPIC_NAME = os.environ.get("TARGET_TOPIC_NAME")
 #    await sender.send_messages(message)
 #    print("Sent a single message")
 
-async def send_a_list_of_messages(sender):
+#async def send_a_list_of_messages(sender):
     # Create a list of messages
-    messages = [ServiceBusMessage("Message in list") for _ in range(10)]
+ #   messages = [ServiceBusMessage("Message in list") for _ in range(10)]
     # send the list of messages to the topic
+  #  await sender.send_messages(messages)
+   # print("Sent a list of 10 messages")
+
+async def send_a_list_of_messages(sender):
+    # Create a list of JSON payloads
+    messages = [
+        ServiceBusMessage(json.dumps({"message": f"Message in list {i}"}))
+        for i in range(10)
+    ]
+    # Send the list of messages to the topic
     await sender.send_messages(messages)
     print("Sent a list of 10 messages")
-
 #async def send_batch_message(sender):
     # Create a batch of messages
 #    async with sender:
